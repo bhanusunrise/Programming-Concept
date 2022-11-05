@@ -127,6 +127,12 @@ int collision(){
 	return 0;
 }
 
+//	Score board File writer
+
+void scoreBoard(int scores){
+	
+}
+
 // Game over message
  
 void gameover(){
@@ -238,17 +244,44 @@ void play(){
 	}
 }
 
+//Menu border
+
+void menuBorder(){
+	for(int i=0; i<51; i++){
+		
+		if(i==0 || i==1)
+			cout << " ";
+		else
+			cout << "=";
+	}
+	cout << "\n";
+	
+	for(int i=0; i<20; i++){
+		cout << "||                                                 ||\n";
+	}
+	
+		for(int i=0; i<51; i++){
+			if(i==0 || i==1)
+				cout << " ";
+			else
+				cout << "=";
+	}
+	cout << "\n";
+}
+
 // Loading Prograssbar
 
 void prograssBar(){
 	system("cls");
+	menuBorder();
+	gotoxy(WIN_WIDTH/2, SCREEN_HEIGHT/2);
 	srand(time(0));
     int x = 0;
 
     for(int i = 0; i<100; i++){
         int r = rand() % 1000;
         x++;
-        cout << "\r" << x << "% Please Wait..." << flush;
+        cout << "\r" << "                  " << x << "% Please Wait..." << flush;
         if(i < 43){
            Sleep(r/6);
         }else if(i > 43 && i < 74){
@@ -260,7 +293,8 @@ void prograssBar(){
         }
     }
 
-    cout << endl << endl << "So Let's Play'.\n" << flush;
+    cout << endl << endl << "                  So Let's Play'.\n" << flush;
+    Sleep(1000);
 }
 
 int main()
@@ -270,6 +304,7 @@ int main()
 	 
 	do{
 		system("cls");
+		menuBorder();
 		gotoxy(10,5); cout<<" -------------------------- "; 
 		gotoxy(10,6); cout<<" |        Car Game        | "; 
 		gotoxy(10,7); cout<<" --------------------------";
