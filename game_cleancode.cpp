@@ -4,11 +4,9 @@
 #include <windows.h>
 #include <time.h>
 #include <ctime>
-//#include <string>
 #include <sstream>
 #include <cstring>
 #include <fstream>
-
 
 #define SCREEN_WIDTH 90
 #define SCREEN_HEIGHT 26
@@ -308,7 +306,87 @@ void instructions(){
 
 // Gameplay environment
 
-void play(){
+// Level 2
+
+int level_2(int level_1_scores){
+		carPos = -1 + WIN_WIDTH/2;
+	score = level_1_scores;
+	enemyFlag[0] = 1;
+	enemyFlag[1] = 0;
+	enemyY[0] = enemyY[1] = 1;
+	  
+	system("cls"); 
+	drawBorder(); 
+	updateScore();
+	genEnemy(0);
+	genEnemy(1);
+	
+	gotoxy(WIN_WIDTH + 7, 2);cout<<"Car Game";
+	gotoxy(WIN_WIDTH + 6, 4);cout<<"----------";
+	gotoxy(WIN_WIDTH + 6, 6);cout<<"----------";
+	gotoxy(WIN_WIDTH + 7, 12);cout<<"Control ";
+	gotoxy(WIN_WIDTH + 7, 13);cout<<"-------- ";
+	gotoxy(WIN_WIDTH + 2, 14);cout<<" A Key - Left";
+	gotoxy(WIN_WIDTH + 2, 15);cout<<" D Key - Right"; 
+	
+	gotoxy(18, 5);cout<<"Press any key to start";
+	getch();
+	gotoxy(18, 5);cout<<"                      ";
+	
+	while(1){
+		if(kbhit()){
+			char ch = getch();
+			if( ch=='a' || ch=='A' ){
+				if( carPos > 18 )
+					carPos -= 4;
+			}
+			if( ch=='d' || ch=='D' ){
+				if( carPos < 50 )
+					carPos += 4;
+			} 
+			if(ch==27){ // Escape key
+				break;
+			}
+		} 
+		
+		drawCar(); 
+		drawEnemy(0); 
+		drawEnemy(1); 
+		if( collision() == 1  ){
+			gameover(score);
+			return;
+		} 
+		Sleep(50);
+		eraseCar();
+		eraseEnemy(0);
+		eraseEnemy(1);   
+		
+		if( enemyY[0] == 10 )
+			if( enemyFlag[1] == 0 )
+				enemyFlag[1] = 1;
+		
+		if( enemyFlag[0] == 1 )
+			enemyY[0] += 1;
+		
+		if( enemyFlag[1] == 1 )
+			enemyY[1] += 1;
+		 
+		if( enemyY[0] > SCREEN_HEIGHT-4 ){
+			resetEnemy(0);
+			score++;
+			updateScore();
+		}
+		if( enemyY[1] > SCREEN_HEIGHT-4 ){
+			resetEnemy(1);
+			score++;
+			updateScore();
+		}
+	}
+}
+
+// Level 1
+
+int level_1(){
 	carPos = -1 + WIN_WIDTH/2;
 	score = 0;
 	enemyFlag[0] = 1;
@@ -384,7 +462,7 @@ void play(){
 	}
 }
 
-//Menu border
+//	Menu border
 
 void menuBorder(){
 	for(int i=0; i<51; i++){
@@ -456,7 +534,7 @@ int main()
 		
 		if( op=='1') {
 			prograssBar();
-			play();
+			level_1();
 		}
 		else if( op=='2') instructions();
 		else if( op=='3') exit(0);
