@@ -306,11 +306,11 @@ void instructions(){
 
 // Gameplay environment
 
-// Level 2
+//	Level 3
 
-int level_2(int level_1_scores){
-		carPos = -1 + WIN_WIDTH/2;
-	score = level_1_scores;
+int level_3(int level_2_scores){
+	carPos = -1 + WIN_WIDTH/2;
+	score = level_2_scores;
 	enemyFlag[0] = 1;
 	enemyFlag[1] = 0;
 	enemyY[0] = enemyY[1] = 1;
@@ -321,7 +321,7 @@ int level_2(int level_1_scores){
 	genEnemy(0);
 	genEnemy(1);
 	
-	gotoxy(WIN_WIDTH + 7, 2);cout<<"Car Game";
+	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 02";
 	gotoxy(WIN_WIDTH + 6, 4);cout<<"----------";
 	gotoxy(WIN_WIDTH + 6, 6);cout<<"----------";
 	gotoxy(WIN_WIDTH + 7, 12);cout<<"Control ";
@@ -354,7 +354,7 @@ int level_2(int level_1_scores){
 		drawEnemy(1); 
 		if( collision() == 1  ){
 			gameover(score);
-			return;
+			return score;
 		} 
 		Sleep(50);
 		eraseCar();
@@ -366,10 +366,95 @@ int level_2(int level_1_scores){
 				enemyFlag[1] = 1;
 		
 		if( enemyFlag[0] == 1 )
-			enemyY[0] += 1;
+			enemyY[0] += 2;
 		
 		if( enemyFlag[1] == 1 )
-			enemyY[1] += 1;
+			enemyY[1] += 2;
+		 
+		if( enemyY[0] > SCREEN_HEIGHT-4 ){
+			resetEnemy(0);
+			score++;
+			updateScore();
+		}
+		if( enemyY[1] > SCREEN_HEIGHT-4 ){
+			resetEnemy(1);
+			score++;
+			updateScore();
+		}
+	}
+}
+
+// Level 2
+
+int level_2(int level_1_scores){
+	
+	carPos = -1 + WIN_WIDTH/2;
+	score = level_1_scores;
+	
+	if(score >= 100){
+			system("cls");
+			level_2(score);
+		}
+	
+	enemyFlag[0] = 1;
+	enemyFlag[1] = 0;
+	enemyY[0] = enemyY[1] = 1;
+	  
+	system("cls"); 
+	drawBorder(); 
+	updateScore();
+	genEnemy(0);
+	genEnemy(1);
+	
+	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 02";
+	gotoxy(WIN_WIDTH + 6, 4);cout<<"----------";
+	gotoxy(WIN_WIDTH + 6, 6);cout<<"----------";
+	gotoxy(WIN_WIDTH + 7, 12);cout<<"Control ";
+	gotoxy(WIN_WIDTH + 7, 13);cout<<"-------- ";
+	gotoxy(WIN_WIDTH + 2, 14);cout<<" A Key - Left";
+	gotoxy(WIN_WIDTH + 2, 15);cout<<" D Key - Right"; 
+	
+	gotoxy(18, 5);cout<<"Press any key to start";
+	getch();
+	gotoxy(18, 5);cout<<"                      ";
+	
+	while(1){
+		if(kbhit()){
+			char ch = getch();
+			if( ch=='a' || ch=='A' ){
+				if( carPos > 18 )
+					carPos -= 4;
+			}
+			if( ch=='d' || ch=='D' ){
+				if( carPos < 50 )
+					carPos += 4;
+			} 
+			if(ch==27){ // Escape key
+				break;
+			}
+		} 
+		
+		drawCar(); 
+		drawEnemy(0); 
+		drawEnemy(1); 
+		if( collision() == 1  ){
+			gameover(score);
+			return score;
+		} 
+		Sleep(50);
+		eraseCar();
+		eraseEnemy(0);
+		eraseEnemy(1);   
+		
+		if( enemyY[0] == 10 )
+			if( enemyFlag[1] == 0 )
+				enemyFlag[1] = 1;
+		
+		if( enemyFlag[0] == 1 )
+			enemyY[0] += 2;
+		
+		if( enemyFlag[1] == 1 )
+			enemyY[1] += 2;
 		 
 		if( enemyY[0] > SCREEN_HEIGHT-4 ){
 			resetEnemy(0);
@@ -389,6 +474,7 @@ int level_2(int level_1_scores){
 int level_1(){
 	carPos = -1 + WIN_WIDTH/2;
 	score = 0;
+	
 	enemyFlag[0] = 1;
 	enemyFlag[1] = 0;
 	enemyY[0] = enemyY[1] = 1;
@@ -399,7 +485,7 @@ int level_1(){
 	genEnemy(0);
 	genEnemy(1);
 	
-	gotoxy(WIN_WIDTH + 7, 2);cout<<"Car Game";
+	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 01" << "\n";
 	gotoxy(WIN_WIDTH + 6, 4);cout<<"----------";
 	gotoxy(WIN_WIDTH + 6, 6);cout<<"----------";
 	gotoxy(WIN_WIDTH + 7, 12);cout<<"Control ";
@@ -412,6 +498,12 @@ int level_1(){
 	gotoxy(18, 5);cout<<"                      ";
 	
 	while(1){
+		
+		if(score >= 50){
+			system("cls");
+			level_2(score);
+		}
+		
 		if(kbhit()){
 			char ch = getch();
 			if( ch=='a' || ch=='A' ){
@@ -432,7 +524,7 @@ int level_1(){
 		drawEnemy(1); 
 		if( collision() == 1  ){
 			gameover(score);
-			return;
+			return score;
 		} 
 		Sleep(50);
 		eraseCar();
@@ -489,7 +581,7 @@ void menuBorder(){
 
 // Loading Prograssbar
 
-void prograssBar(){
+void prograssBar(string message){
 	system("cls");
 	menuBorder();
 	gotoxy(WIN_WIDTH/2, SCREEN_HEIGHT/2);
@@ -511,7 +603,7 @@ void prograssBar(){
         }
     }
 
-    cout << endl << endl << "                  So Let's Play'.\n" << flush;
+    cout << endl << endl << "                  " << message << "\n" << flush;
     Sleep(1000);
 }
 
@@ -533,7 +625,7 @@ int main()
 		char op = getche();
 		
 		if( op=='1') {
-			prograssBar();
+			prograssBar("Let\'s Play Level 1");
 			level_1();
 		}
 		else if( op=='2') instructions();
