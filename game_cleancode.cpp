@@ -3,6 +3,10 @@
 #include<dos.h>		//Handles inturrupts, Produce sounds,
 #include <windows.h>
 #include <time.h>
+#include <ctime>
+//#include <string>
+#include <sstream>
+#include <cstring>
 
 #define SCREEN_WIDTH 90
 #define SCREEN_HEIGHT 26
@@ -127,12 +131,129 @@ int collision(){
 	return 0;
 }
 
-//	Score board File writer
 
-void scoreBoard(int scores){
-	
+//	String Multiplier for scoreboard setup
+
+string operator * (string a, unsigned int b) {
+    string output = "";
+    while (b--) {
+        output += a;
+    }
+    return output;
 }
 
+// String trim on right side
+string& rightTrim(string& str, string& chars)
+{
+    str.erase(str.find_last_not_of(chars) + 1);
+    return str;
+}
+
+//	Score board File writer
+
+void scoreBoardWriter(string player, int scores){
+	
+	//	Time objects and functions
+	time_t now = time(0);;
+	tm *ltm = localtime(&now);
+	
+	// Structure of scoreboard
+	struct scoreBoard{
+		
+		//	Time variables
+		int playYear;
+		int playMonth;
+		int playDate;
+		int playHour;
+		int playMinutes;
+		int playSeconds;
+		
+		//	variables string version
+		string playYear_str;
+		string playMonth_str;
+		string playDate_str;
+		string playHour_str;
+		string playMinutes_str;
+		string playSeconds_str;
+		
+		string scores_str;
+		
+		// Finalized player data
+		string playerName;
+		string dateAndTime;
+		int playerScores;
+		
+		string printData;
+	};
+	
+	struct scoreBoard scB1;
+	
+	// Date and time
+	scB1.playYear = 1900 + ltm->tm_year;
+	scB1.playMonth = 1 + ltm->tm_mon;
+	scB1.playDate = ltm->tm_mday;
+	scB1.playHour =  5+ltm->tm_hour;
+	scB1.playMinutes = 30+ltm->tm_min;
+	scB1.playSeconds = 30+ltm->tm_min;
+	
+	//	Date and time string version
+	stringstream ss1;	
+	ss1 << scB1.playYear;	
+	ss1 >> scB1.playYear_str; //cout << scB1.playYear_str;
+	
+	stringstream ss2;
+	ss2 << scB1.playMonth;
+	ss2 >> scB1.playMonth_str; //cout << scB1.playMonth_str;
+	
+	stringstream ss3;
+	ss3 << scB1.playDate;
+	ss3 >> scB1.playDate_str;
+	
+	stringstream ss4;
+	ss4 << scB1.playHour;
+	ss4 >> scB1.playHour_str;
+	
+	stringstream ss5;
+	ss5 << scB1.playMinutes;
+	ss5 >> scB1.playMinutes_str;
+	
+	stringstream ss6;
+	ss6 << scB1.playSeconds;
+	ss6 >> scB1.playSeconds_str;
+	
+	scB1.playerName = player;
+	scB1.playerScores = scores;	
+	scB1.dateAndTime = scB1.playYear_str + "-" + scB1.playMonth_str + "-" + scB1.playDate_str + " at " + scB1.playHour_str + ":" + scB1.playMinutes_str + ":" + scB1.playSeconds_str;
+
+	stringstream ss7;
+	ss7 << scB1.playerScores;
+	ss7 >> scB1.scores_str;
+
+	// Adding additional spaces and reducing the space
+	int nameLength = scB1.playerName.length();
+	const int MAX_NAME_LENGTH = 15;
+	char playerNameArr[nameLength];
+	const string appender = " ";
+	int lengthDiff;
+	
+	if(nameLength < MAX_NAME_LENGTH){
+		
+		lengthDiff = MAX_NAME_LENGTH - nameLength;
+		scB1.playerName += (appender*lengthDiff);
+		
+	}else if(nameLength > MAX_NAME_LENGTH){
+		
+		lengthDiff = nameLength - MAX_NAME_LENGTH;
+		for(int i = lengthDiff; i > 0; i--){
+			
+			scB1.playerName = scB1.playerName.erase(scB1.playerName.size()-1, 1);
+		}
+		scB1.playerName += "   ";
+	}
+	
+	scB1.printData = scB1.playerName + scB1.dateAndTime + "          " + scB1.scores_str;
+	cout << scB1.printData;
+}
 // Game over message
  
 void gameover(){
@@ -204,7 +325,7 @@ void play(){
 				if( carPos < 50 )
 					carPos += 4;
 			} 
-			if(ch==27){
+			if(ch==27){ // Escape key
 				break;
 			}
 		} 
@@ -300,10 +421,11 @@ void prograssBar(){
 int main()
 {
 	setcursor(0,0); 
-	srand( (unsigned)time(NULL)); 
+	srand( (unsigned)time(NULL));
 	 
 	do{
 		system("cls");
+		scoreBoardWriter("Eternal Mankaque Sharingan is a powerful doujutsu", 100);
 		menuBorder();
 		gotoxy(10,5); cout<<" -------------------------- "; 
 		gotoxy(10,6); cout<<" |        Car Game        | "; 
