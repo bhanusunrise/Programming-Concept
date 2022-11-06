@@ -7,6 +7,8 @@
 //#include <string>
 #include <sstream>
 #include <cstring>
+#include <fstream>
+
 
 #define SCREEN_WIDTH 90
 #define SCREEN_HEIGHT 26
@@ -239,7 +241,7 @@ void scoreBoardWriter(string player, int scores){
 	if(nameLength < MAX_NAME_LENGTH){
 		
 		lengthDiff = MAX_NAME_LENGTH - nameLength;
-		scB1.playerName += (appender*lengthDiff);
+		scB1.playerName += (appender*(lengthDiff+3));
 		
 	}else if(nameLength > MAX_NAME_LENGTH){
 		
@@ -249,15 +251,32 @@ void scoreBoardWriter(string player, int scores){
 			scB1.playerName = scB1.playerName.erase(scB1.playerName.size()-1, 1);
 		}
 		scB1.playerName += "   ";
+	}else{
+		scB1.playerName += "   ";
 	}
 	
-	scB1.printData = scB1.playerName + scB1.dateAndTime + "          " + scB1.scores_str;
-	cout << scB1.printData;
+	scB1.printData = " " + scB1.playerName + scB1.dateAndTime + "        " + scB1.scores_str + "\n";
+	//cout << scB1.printData;
+	
+	// Copy scores to the table
+	fstream f;
+    ofstream fout;
+    ifstream fin;
+    fin.open("Score_Table.txt");
+    fout.open ("Score_Table.txt",ios::app);
+    if(fin.is_open())
+      fout<<scB1.printData;
+    fin.close();
+    fout.close();
 }
 // Game over message
  
-void gameover(){
+void gameover(int scores){
 	system("cls");
+	string playerName;
+	cout << "Your Name : ";
+	cin >> playerName;
+	scoreBoardWriter(playerName, scores);
 	cout<<endl;
 	cout<<"\t\t--------------------------"<<endl;
 	cout<<"\t\t-------- Game Over -------"<<endl;
@@ -334,7 +353,7 @@ void play(){
 		drawEnemy(0); 
 		drawEnemy(1); 
 		if( collision() == 1  ){
-			gameover();
+			gameover(score);
 			return;
 		} 
 		Sleep(50);
@@ -425,7 +444,6 @@ int main()
 	 
 	do{
 		system("cls");
-		scoreBoardWriter("Eternal Mankaque Sharingan is a powerful doujutsu", 100);
 		menuBorder();
 		gotoxy(10,5); cout<<" -------------------------- "; 
 		gotoxy(10,6); cout<<" |        Car Game        | "; 
@@ -447,3 +465,5 @@ int main()
 	
 	return 0;
 }
+
+
