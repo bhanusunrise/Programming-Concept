@@ -28,7 +28,7 @@ char car[4][4] = { ' ','?','?',' ',
 					'?','?','?','?' }; 
 					
 int carPos = WIN_WIDTH/2;
-int score = 0; 
+int score = 180; 
 int lives = 1;
 
 // Prints the game name
@@ -369,14 +369,12 @@ void scoreBoardReader(){
  
 void gameover(int scores){
 	system("cls");
+	lostMessage();
 	string playerName;
 	cout << "Your Name : ";
 	cin >> playerName;
 	scoreBoardWriter(playerName, scores);
 	cout<<endl;
-	cout<<"\t\t--------------------------"<<endl;
-	cout<<"\t\t-------- Game Over -------"<<endl;
-	cout<<"\t\t--------------------------"<<endl<<endl <<endl;
 	cout<<"\t\tPress any key to go back to menu.";
 	getch();
 }
@@ -662,7 +660,7 @@ int level_1(){
 		if( collision() == 1  ){
 			lives--;
 			if(lives <= 0){
-			gameover(score);
+				gameover(score);
 			return score;
 			}
 		} 
