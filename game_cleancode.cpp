@@ -34,15 +34,15 @@ int lives = 1;
 // Prints the game name
 
 void gameName(){
-	cout << "=======   ===      ===     ====      ====   =======    ====         =           ====" << endl;
-	cout << "=        =   =    =   =   =    =    =    =  =         =    =       ==          =    =" << endl;
-	cout << "=       =     =  =       =      =  =     =  =        =     =      = =         =      =" << endl;
-	cout << "=        =       =       =      =  =    =   =        =    =         =         =      =" << endl;
-	cout << "=====     ===    =       ========  =====    =====    =====          =         =      =" << endl;
-	cout << "=            =   =       =      =  =        =        ==             =         =      =" << endl;
-	cout << "=             =  =       =      =  =        =        = =            =         =      =" << endl;
-	cout << "=        =    =   =   =  =      =  =        =        =  =           =      ==  =    =" << endl;
-	cout << "=======   ===      ===   =      =  =        =======  =   =       ========  ==   ====" <<endl;
+	cout << "\t=======   ===      ===     ====      ====   =======    ====         =           ====" << endl;
+	cout << "\t=        =   =    =   =   =    =    =    =  =         =    =       ==          =    =" << endl;
+	cout << "\t=       =     =  =       =      =  =     =  =        =     =      = =         =      =" << endl;
+	cout << "\t=        =       =       =      =  =    =   =        =    =         =         =      =" << endl;
+	cout << "\t=====     ===    =       ========  =====    =====    =====          =         =      =" << endl;
+	cout << "\t=            =   =       =      =  =        =        ==             =         =      =" << endl;
+	cout << "\t=             =  =       =      =  =        =        = =            =         =      =" << endl;
+	cout << "\t=        =    =   =   =  =      =  =        =        =  =           =      ==  =    =" << endl;
+	cout << "\t=======   ===      ===   =      =  =        =======  =   =       ========  ==   ====" <<endl;
 }
 
 // Prints the win message
@@ -329,6 +329,42 @@ void scoreBoardWriter(string player, int scores){
     fout.close();
 }
 
+// Print the highScore table by reading the score_table file
+
+void scoreBoardReader(){
+	
+	system("cls");
+	
+	FILE* ptr;
+    char ch;
+ 
+    // Opening file in reading mode
+    ptr = fopen("Score_Table.txt", "r");
+ 
+    if (NULL == ptr) {
+        printf("file can't be opened \n");
+    }
+     // Printing what is written in file
+    // character by character using loop.
+    do {
+        ch = fgetc(ptr);
+        printf("%c", ch);
+ 
+        // Checking if character is not EOF.
+        // If it is EOF stop eading.
+    } while (ch != EOF);
+ 
+    // Closing the file
+    fclose(ptr);
+	
+    cout<<endl;
+    gameName();
+    
+    cout << "Press any key to return to the main menu";
+	getch();
+    
+}
+
 // Game over message
  
 void gameover(int scores){
@@ -338,7 +374,9 @@ void gameover(int scores){
 	cin >> playerName;
 	scoreBoardWriter(playerName, scores);
 	cout<<endl;
-	lostMessage();
+	cout<<"\t\t--------------------------"<<endl;
+	cout<<"\t\t-------- Game Over -------"<<endl;
+	cout<<"\t\t--------------------------"<<endl<<endl <<endl;
 	cout<<"\t\tPress any key to go back to menu.";
 	getch();
 }
@@ -368,19 +406,20 @@ void updateScore(){
 void instructions(){
 	
 	system("cls");
-	cout<<"Instructions";
-	cout<<"\n----------------";
-	cout<<"\n Avoid Cars by moving left or right. ";
-	cout<<"\n\n Press 'a' to move left";
-	cout<<"\n Press 'd' to move right";
-	cout<<"\n Press 'escape' to exit";
-	cout<<"\n\nPress any key to go back to menu";
+	gameName();
+	gotoxy(15,11);cout<<"\tInstructions";
+	gotoxy(15,12);cout<<"\t------------";
+	gotoxy(15,13);cout<<"\t #Avoid Cars by moving left or right. ";
+	gotoxy(15,14);cout<<"\t #Press 'a' to move left";
+	gotoxy(15,15);cout<<"\t #Press 'd' to move right";
+	gotoxy(15,16);cout<<"\t #Press 'escape' to exit";
+	gotoxy(15,17);cout<<"\t #Press any key to go back to menu";
 	getch();
 }
 
 // Gameplay environment
 
-//	Level 3
+//	Level 3 -> Both enemies are +1 faster than level 1
 
 int level_3(int level_2_scores){
 	carPos = -1 + WIN_WIDTH/2;
@@ -472,7 +511,7 @@ int level_3(int level_2_scores){
 	}
 }
 
-// Level 2
+// Level 2 - 0ne enemy is +1 faster than hte other
 
 int level_2(int level_1_scores){
 	
@@ -684,6 +723,7 @@ void menuBorder(){
 
 void prograssBar(string message){
 	system("cls");
+	gameName();
 	menuBorder();
 	gotoxy(WIN_WIDTH/2, SCREEN_HEIGHT/2);
 	srand(time(0));
@@ -717,23 +757,24 @@ int main()
 	 
 	do{
 		system("cls");
-
-		menuBorder();
-		gotoxy(10,5); cout<<" -------------------------- "; 
-		gotoxy(10,6); cout<<" |        Car Game        | "; 
-		gotoxy(10,7); cout<<" --------------------------";
-		gotoxy(10,9); cout<<"1. Start Game";
-		gotoxy(10,10); cout<<"2. Instructions";	 
-		gotoxy(10,11); cout<<"3. Quit";
-		gotoxy(10,13); cout<<"Select option: ";
+		gameName();
+		gotoxy(15,11); cout<<"1. Start Game";
+		gotoxy(15,12); cout<<"2. Instructions";	 
+		gotoxy(15,13); cout<<"3. High Scores";
+		gotoxy(15,14); cout<<"4. Quit";
+		gotoxy(15,16); cout<<"Select option: ";
 		char op = getche();
 		
 		if( op=='1') {
 			prograssBar("Let\'s Play Level 1");
 			level_1();
 		}
-		else if( op=='2') instructions();
-		else if( op=='3') exit(0);
+		else if( op=='2') 
+			instructions();
+		else if( op=='3') 
+			scoreBoardReader();
+		else if( op == '4')
+			exit(0);
 		
 	}while(1);
 	
