@@ -43,7 +43,7 @@ void gotoxy(int x, int y){
 
 void setcursor(bool visible, DWORD size) {
 	if(size == 0)
-		size = 380;	
+		size = 20;	
 	
 	CONSOLE_CURSOR_INFO lpCursor;	
 	lpCursor.bVisible = visible;
