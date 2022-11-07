@@ -526,7 +526,7 @@ int level_2(int level_1_scores){
 	genEnemy(0);
 	genEnemy(1);
 	
-	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 01" << "\n";
+	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 02" << "\n";
 	gotoxy(WIN_WIDTH + 6, 4);cout<<"----------";
 	gotoxy(WIN_WIDTH + 6, 6);cout<<"----------";
 	gotoxy(WIN_WIDTH + 7, 12);cout<<"Control ";
