@@ -29,6 +29,7 @@ char car[4][4] = { ' ','?','?',' ',
 					
 int carPos = WIN_WIDTH/2;
 int score = 0; 
+int lives = 1;
 
 // Change the console's cursor position
 
@@ -42,7 +43,7 @@ void gotoxy(int x, int y){
 
 void setcursor(bool visible, DWORD size) {
 	if(size == 0)
-		size = 20;	
+		size = 380;	
 	
 	CONSOLE_CURSOR_INFO lpCursor;	
 	lpCursor.bVisible = visible;
@@ -81,7 +82,7 @@ void drawEnemy(int ind){
 	} 
 }
 
-//Draw the ememy's erased version
+//	Draw the ememy's erased version
 
 void eraseEnemy(int ind){
 	if( enemyFlag[ind] == true ){
@@ -92,7 +93,27 @@ void eraseEnemy(int ind){
 	} 
 }
 
-//Regernerate the destroyed enemy
+//	Powerup
+/*
+	This fuction is made for all functions.
+	Pass the parameters as follows
+	freezer = 'f'
+	life = 'l' 
+*/ 
+
+int powerUp(char mode){
+	if(mode == 'f'){
+		//freezer();
+		
+	}else if(mode == 'l'){
+		
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+//	Regernerate the destroyed enemy
 
 void resetEnemy(int ind){
 	eraseEnemy(ind);
@@ -131,7 +152,6 @@ int collision(){
 	return 0;
 }
 
-
 //	String Multiplier for scoreboard setup
 
 string operator * (string a, unsigned int b) {
@@ -143,6 +163,7 @@ string operator * (string a, unsigned int b) {
 }
 
 // String trim on right side
+
 string& rightTrim(string& str, string& chars)
 {
     str.erase(str.find_last_not_of(chars) + 1);
@@ -153,9 +174,11 @@ string& rightTrim(string& str, string& chars)
 
 void scoreBoardWriter(string player, int scores){
 	
-	//	Time objects and functions
-	time_t now = time(0);;
-	tm *ltm = localtime(&now);
+	time_t currentTime;
+ 	struct tm *localTime;
+
+ 	time( &currentTime );                   // Get the current time
+ 	localTime = localtime( &currentTime );
 	
 	// Structure of scoreboard
 	struct scoreBoard{
@@ -189,12 +212,12 @@ void scoreBoardWriter(string player, int scores){
 	struct scoreBoard scB1;
 	
 	// Date and time
-	scB1.playYear = 1900 + ltm->tm_year;
-	scB1.playMonth = 1 + ltm->tm_mon;
-	scB1.playDate = ltm->tm_mday;
-	scB1.playHour =  5+ltm->tm_hour;
-	scB1.playMinutes = 30+ltm->tm_min;
-	scB1.playSeconds = 30+ltm->tm_min;
+	scB1.playYear = 1900 + localTime->tm_year;
+	scB1.playMonth = 1 + localTime->tm_mon;
+	scB1.playDate = localTime->tm_mday;
+	scB1.playHour =  5+localTime->tm_hour;
+	scB1.playMinutes = 30+localTime->tm_min;
+	scB1.playSeconds = 30+localTime->tm_min;
 	
 	//	Date and time string version
 	stringstream ss1;	
@@ -267,6 +290,7 @@ void scoreBoardWriter(string player, int scores){
     fin.close();
     fout.close();
 }
+
 // Game over message
  
 void gameover(int scores){
@@ -278,6 +302,22 @@ void gameover(int scores){
 	cout<<endl;
 	cout<<"\t\t--------------------------"<<endl;
 	cout<<"\t\t-------- Game Over -------"<<endl;
+	cout<<"\t\t--------------------------"<<endl<<endl;
+	cout<<"\t\tPress any key to go back to menu.";
+	getch();
+}
+
+// You win message
+
+void win(int scores){
+	system("cls");
+	string playerName;
+	cout << "Your Name : ";
+	cin >> playerName;
+	scoreBoardWriter(playerName, scores);
+	cout<<endl;
+	cout<<"\t\t--------------------------"<<endl;
+	cout<<"\t\t-------- You Win -------"<<endl;
 	cout<<"\t\t--------------------------"<<endl<<endl;
 	cout<<"\t\tPress any key to go back to menu.";
 	getch();
@@ -311,6 +351,7 @@ void instructions(){
 int level_3(int level_2_scores){
 	carPos = -1 + WIN_WIDTH/2;
 	score = level_2_scores;
+	
 	enemyFlag[0] = 1;
 	enemyFlag[1] = 0;
 	enemyY[0] = enemyY[1] = 1;
@@ -321,7 +362,7 @@ int level_3(int level_2_scores){
 	genEnemy(0);
 	genEnemy(1);
 	
-	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 02";
+	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 03" << "\n";
 	gotoxy(WIN_WIDTH + 6, 4);cout<<"----------";
 	gotoxy(WIN_WIDTH + 6, 6);cout<<"----------";
 	gotoxy(WIN_WIDTH + 7, 12);cout<<"Control ";
@@ -334,15 +375,25 @@ int level_3(int level_2_scores){
 	gotoxy(18, 5);cout<<"                      ";
 	
 	while(1){
+		
+		if(score >= 400){
+			system("cls");
+			win(score);
+			
+			system("cls");
+			break;
+			
+		}
+		
 		if(kbhit()){
 			char ch = getch();
 			if( ch=='a' || ch=='A' ){
 				if( carPos > 18 )
-					carPos -= 4;
+					carPos -= 5;
 			}
 			if( ch=='d' || ch=='D' ){
 				if( carPos < 50 )
-					carPos += 4;
+					carPos += 5;
 			} 
 			if(ch==27){ // Escape key
 				break;
@@ -353,8 +404,11 @@ int level_3(int level_2_scores){
 		drawEnemy(0); 
 		drawEnemy(1); 
 		if( collision() == 1  ){
+			lives--;
+			if(lives <= 0){
 			gameover(score);
 			return score;
+			}
 		} 
 		Sleep(50);
 		eraseCar();
@@ -366,7 +420,7 @@ int level_3(int level_2_scores){
 				enemyFlag[1] = 1;
 		
 		if( enemyFlag[0] == 1 )
-			enemyY[0] += 2;
+			enemyY[0] += 1;
 		
 		if( enemyFlag[1] == 1 )
 			enemyY[1] += 2;
@@ -378,7 +432,7 @@ int level_3(int level_2_scores){
 		}
 		if( enemyY[1] > SCREEN_HEIGHT-4 ){
 			resetEnemy(1);
-			score++;
+			score+=2;
 			updateScore();
 		}
 	}
@@ -391,11 +445,6 @@ int level_2(int level_1_scores){
 	carPos = -1 + WIN_WIDTH/2;
 	score = level_1_scores;
 	
-	if(score >= 100){
-			system("cls");
-			level_2(score);
-		}
-	
 	enemyFlag[0] = 1;
 	enemyFlag[1] = 0;
 	enemyY[0] = enemyY[1] = 1;
@@ -406,7 +455,7 @@ int level_2(int level_1_scores){
 	genEnemy(0);
 	genEnemy(1);
 	
-	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 02";
+	gotoxy(WIN_WIDTH + 7, 2);cout<<"Level 01" << "\n";
 	gotoxy(WIN_WIDTH + 6, 4);cout<<"----------";
 	gotoxy(WIN_WIDTH + 6, 6);cout<<"----------";
 	gotoxy(WIN_WIDTH + 7, 12);cout<<"Control ";
@@ -419,15 +468,24 @@ int level_2(int level_1_scores){
 	gotoxy(18, 5);cout<<"                      ";
 	
 	while(1){
+		
+		if(score >= 150){
+			system("cls");
+			level_3(score);
+			system("cls");
+			break;
+			
+		}
+		
 		if(kbhit()){
 			char ch = getch();
 			if( ch=='a' || ch=='A' ){
 				if( carPos > 18 )
-					carPos -= 4;
+					carPos -= 5;
 			}
 			if( ch=='d' || ch=='D' ){
 				if( carPos < 50 )
-					carPos += 4;
+					carPos += 5;
 			} 
 			if(ch==27){ // Escape key
 				break;
@@ -438,8 +496,11 @@ int level_2(int level_1_scores){
 		drawEnemy(0); 
 		drawEnemy(1); 
 		if( collision() == 1  ){
+			lives--;
+			if(lives <= 0){
 			gameover(score);
 			return score;
+			}
 		} 
 		Sleep(50);
 		eraseCar();
@@ -451,7 +512,7 @@ int level_2(int level_1_scores){
 				enemyFlag[1] = 1;
 		
 		if( enemyFlag[0] == 1 )
-			enemyY[0] += 2;
+			enemyY[0] += 1;
 		
 		if( enemyFlag[1] == 1 )
 			enemyY[1] += 2;
@@ -463,17 +524,17 @@ int level_2(int level_1_scores){
 		}
 		if( enemyY[1] > SCREEN_HEIGHT-4 ){
 			resetEnemy(1);
-			score++;
+			score+=2;
 			updateScore();
 		}
 	}
 }
 
+
 // Level 1
 
 int level_1(){
 	carPos = -1 + WIN_WIDTH/2;
-	score = 0;
 	
 	enemyFlag[0] = 1;
 	enemyFlag[1] = 0;
@@ -502,6 +563,9 @@ int level_1(){
 		if(score >= 50){
 			system("cls");
 			level_2(score);
+			system("cls");
+			break;
+			
 		}
 		
 		if(kbhit()){
@@ -523,8 +587,11 @@ int level_1(){
 		drawEnemy(0); 
 		drawEnemy(1); 
 		if( collision() == 1  ){
+			lives--;
+			if(lives <= 0){
 			gameover(score);
 			return score;
+			}
 		} 
 		Sleep(50);
 		eraseCar();
@@ -607,6 +674,8 @@ void prograssBar(string message){
     Sleep(1000);
 }
 
+//	Main function
+
 int main()
 {
 	setcursor(0,0); 
@@ -614,6 +683,7 @@ int main()
 	 
 	do{
 		system("cls");
+
 		menuBorder();
 		gotoxy(10,5); cout<<" -------------------------- "; 
 		gotoxy(10,6); cout<<" |        Car Game        | "; 
