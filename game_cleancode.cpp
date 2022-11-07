@@ -31,6 +31,44 @@ int carPos = WIN_WIDTH/2;
 int score = 0; 
 int lives = 1;
 
+// Prints the game name
+
+void gameName(){
+	cout << "=======   ===      ===     ====      ====   =======    ====         =           ====" << endl;
+	cout << "=        =   =    =   =   =    =    =    =  =         =    =       ==          =    =" << endl;
+	cout << "=       =     =  =       =      =  =     =  =        =     =      = =         =      =" << endl;
+	cout << "=        =       =       =      =  =    =   =        =    =         =         =      =" << endl;
+	cout << "=====     ===    =       ========  =====    =====    =====          =         =      =" << endl;
+	cout << "=            =   =       =      =  =        =        ==             =         =      =" << endl;
+	cout << "=             =  =       =      =  =        =        = =            =         =      =" << endl;
+	cout << "=        =    =   =   =  =      =  =        =        =  =           =      ==  =    =" << endl;
+	cout << "=======   ===      ===   =      =  =        =======  =   =       ========  ==   ====" <<endl;
+}
+
+// Prints the win message
+
+void winMessage(){
+	cout << "=     =    =    =   =    =     =   ===   === =   =" << endl;
+	cout << " =   =    = =   =   =    =     =    =    = = =  = =" << endl;
+	cout << "  = =    =   =  =   =    = === =    =    = = =  = =" << endl;
+	cout << "   =     =   =  =   =    = = = =    =    = = =   =" << endl;
+	cout << "   =     =   =  =   =    = = = =    =    = = =    " << endl;
+	cout << "   =      = =   =   =    = = = =    =    = = =   =" << endl;
+	cout << "   =       =     ===     === ===  =====  = ===  ===" << endl;
+}
+
+//	Prints the lost message
+
+void lostMessage(){
+	cout << "=     =    =    =   =    =        =     ===   =====   =" << endl;
+	cout << " =   =    = =   =   =    =       = =   =   =    =    = =" << endl;
+	cout << "  = =    =   =  =   =    =      =   =   =       =    = =" << endl;
+	cout << "   =     =   =  =   =    =      =   =    =      =     = " << endl;
+	cout << "   =     =   =  =   =    =      =   =     =     =    " << endl;
+	cout << "   =      = =   =   =    =       = =   =   =    =     =" << endl;
+	cout << "   =       =     ===     =====    =     ===     =    ===" << endl;
+}
+
 // Change the console's cursor position
 
 void gotoxy(int x, int y){
@@ -300,9 +338,7 @@ void gameover(int scores){
 	cin >> playerName;
 	scoreBoardWriter(playerName, scores);
 	cout<<endl;
-	cout<<"\t\t--------------------------"<<endl;
-	cout<<"\t\t-------- Game Over -------"<<endl;
-	cout<<"\t\t--------------------------"<<endl<<endl;
+	lostMessage();
 	cout<<"\t\tPress any key to go back to menu.";
 	getch();
 }
@@ -316,9 +352,7 @@ void win(int scores){
 	cin >> playerName;
 	scoreBoardWriter(playerName, scores);
 	cout<<endl;
-	cout<<"\t\t--------------------------"<<endl;
-	cout<<"\t\t-------- You Win -------"<<endl;
-	cout<<"\t\t--------------------------"<<endl<<endl;
+	winMessage();
 	cout<<"\t\tPress any key to go back to menu.";
 	getch();
 }
