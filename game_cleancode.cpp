@@ -673,6 +673,7 @@ int level_2(int level_1_scores){
 
 int level_1(){
 	carPos = -1 + WIN_WIDTH/2;
+	score = 0;
 	
 	enemyFlag[0] = 1;
 	enemyFlag[1] = 0;
@@ -826,7 +827,6 @@ void prograssBar(string message){
 
 int main()
 {
-
 	setcursor(0,0); 
 	srand( (unsigned)time(NULL));
 	HWND hWnd = GetConsoleWindow();
