@@ -304,9 +304,9 @@ void scoreBoardWriter(string player, int scores){
 	scB1.playYear = 1900 + localTime->tm_year;
 	scB1.playMonth = 1 + localTime->tm_mon;
 	scB1.playDate = localTime->tm_mday;
-	scB1.playHour =  5+localTime->tm_hour;
-	scB1.playMinutes = 30+localTime->tm_min;
-	scB1.playSeconds = 30+localTime->tm_min;
+	scB1.playHour =  localTime->tm_hour;
+	scB1.playMinutes = localTime->tm_min;
+	scB1.playSeconds = localTime->tm_min;
 	
 	//	Date and time string version
 	stringstream ss1;	
