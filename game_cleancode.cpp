@@ -1,3 +1,12 @@
+/*
+	Team Members : 
+			IM/2020/108 - Pasindu Bhanuka
+			IM/2020/087 - Thamindu Premarathne
+			IM/2020/054 - Hasthika Udathanne
+			IM/2020/008 - Eranda De Silva
+			IM/2020/061 - Parami Wicramarathne
+*/
+
 #include<iostream>
 #include<conio.h>
 #include<dos.h>		//Handles inturrupts, Produce sounds,
@@ -70,7 +79,9 @@ void lostMessage(){
 	cout << "   =       =     ===     =====    =     ===     =    ===" << endl;
 }
 
-// Audio
+//	Music tracks
+
+//	Main menu bg music
 
 void mainMenuAudio(int audioCode){
 	mciSendString("open \"m1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
@@ -82,6 +93,8 @@ void mainMenuAudio(int audioCode){
 
 }
 
+//	Mouse click audio
+
 void mainMenuClickAudio(int audioCode){
 	mciSendString("open \"c2.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
 	if(audioCode==1){
@@ -90,6 +103,8 @@ void mainMenuClickAudio(int audioCode){
 		mciSendString("close mp3", NULL, 0, NULL);
 	}
 }
+
+//	Play sound whe gameover
 
 void gameOverAudio(int audioCode){
 	mciSendString("open \"go1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
@@ -101,6 +116,8 @@ void gameOverAudio(int audioCode){
 
 }
 
+//	While playing the game plays
+
 void gamePlayAudio(int audioCode){
 	mciSendString("open \"g1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
 	if(audioCode==1){
@@ -110,6 +127,8 @@ void gamePlayAudio(int audioCode){
 	}
 
 }
+
+//	Collision audio
 
 void playerHitAudio(int audioCode){
 	mciSendString("open \"phit1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
@@ -202,8 +221,9 @@ void wallpaper2(){
 	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;	
 }
 
+//	Draw the animation
+
 void animation(){
-	// infinite loop
 	for(int i=0; i<5; i++){
 	gotoxy(40,10);	wallpaper();
 	gotoxy(40,10);	wallpaper2();
@@ -219,6 +239,7 @@ void animation(){
 	gotoxy(50,10);	wallpaper2();
 	
 	}
+	
 	gotoxy(40,10);	wallpaper();
 }
 
@@ -917,7 +938,12 @@ void prograssBar(string message){
     Sleep(1000);
 }
 
-// Game
+// Complete Game
+
+/*
+	Please update this function.
+	Don't update main function.
+*/
 
 void game(){
 	setcursor(0,0); 
@@ -968,12 +994,10 @@ void game(){
 	}while(1);
 }
 
-//	Main function
+//	Main function - Please make it cleaner
 
 int main()
 {
 	game();
 	return 0;
 }
-
-
