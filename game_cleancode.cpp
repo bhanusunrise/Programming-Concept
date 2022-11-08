@@ -22,18 +22,19 @@ COORD CursorPosition;
 int enemyY[3];
 int enemyX[3];
 int enemyFlag[3];
-char car[4][4] = { ' ','?','?',' ', 
-					'?','?','?','?', 
-					' ','?','?',' ',
-					'?','?','?','?' }; 
+char car[4][4] = { ' ','*','*',' ', 
+					'<','|','|','>', 
+					' ','|','|',' ',
+					'<','|','|','>' }; 
 					
 int carPos = WIN_WIDTH/2;
-int score = 180; 
-int lives = 1;
+int score = 0; 
+int lives = 2;
 
 // Prints the game name
 
 void gameName(){
+	SetConsoleTextAttribute(console, 10);
 	cout << "\t=======   ===      ===     ====      ====   =======    ====         =           ====" << endl;
 	cout << "\t=        =   =    =   =   =    =    =    =  =         =    =       ==          =    =" << endl;
 	cout << "\t=       =     =  =       =      =  =     =  =        =     =      = =         =      =" << endl;
@@ -69,6 +70,56 @@ void lostMessage(){
 	cout << "   =       =     ===     =====    =     ===     =    ===" << endl;
 }
 
+// Audio
+
+void mainMenuAudio(int audioCode){
+	mciSendString("open \"m1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
+	if(audioCode==1){
+		mciSendString("play mp3 repeat", NULL, 0, NULL);
+	}else{
+		mciSendString("close mp3", NULL, 0, NULL);
+	}
+
+}
+
+void mainMenuClickAudio(int audioCode){
+	mciSendString("open \"c2.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
+	if(audioCode==1){
+		mciSendString("play mp3", NULL, 0, NULL);
+	}else{
+		mciSendString("close mp3", NULL, 0, NULL);
+	}
+}
+
+void gameOverAudio(int audioCode){
+	mciSendString("open \"go1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
+	if(audioCode==1){
+		mciSendString("play mp3", NULL, 0, NULL);
+	}else{
+		mciSendString("close mp3", NULL, 0, NULL);
+	}
+
+}
+
+void gamePlayAudio(int audioCode){
+	mciSendString("open \"g1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
+	if(audioCode==1){
+		mciSendString("play mp3 repeat", NULL, 0, NULL);
+	}else{
+		mciSendString("close mp3", NULL, 0, NULL);
+	}
+
+}
+
+void playerHitAudio(int audioCode){
+	mciSendString("open \"phit1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
+	if(audioCode==1){
+		mciSendString("play mp3", NULL, 0, NULL);
+	}else{
+		mciSendString("close mp3", NULL, 0, NULL);
+	}
+
+}
 // Change the console's cursor position
 
 void gotoxy(int x, int y){
@@ -94,12 +145,12 @@ void setcursor(bool visible, DWORD size) {
 void drawBorder(){  
 	for(int i=0; i<SCREEN_HEIGHT; i++){
 		for(int j=0; j<17; j++){
-			gotoxy(0+j,i); cout<<"?";
-			gotoxy(WIN_WIDTH-j,i); cout<<"?";
+			gotoxy(0+j,i); cout<<"|";
+			gotoxy(WIN_WIDTH-j,i); cout<<"|";
 		}
 	} 
 	for(int i=0; i<SCREEN_HEIGHT; i++){
-		gotoxy(SCREEN_WIDTH,i); cout<<"?";
+		gotoxy(SCREEN_WIDTH,i); cout<<"|";
 	} 
 }
 
@@ -332,7 +383,8 @@ void scoreBoardWriter(string player, int scores){
 // Print the highScore table by reading the score_table file
 
 void scoreBoardReader(){
-	
+	mainMenuClickAudio(2);
+	mainMenuAudio(1);
 	system("cls");
 	
 	FILE* ptr;
@@ -402,7 +454,8 @@ void updateScore(){
 // Show the instructions
 
 void instructions(){
-	
+	mainMenuClickAudio(2);
+	mainMenuAudio(1);
 	system("cls");
 	gameName();
 	gotoxy(15,11);cout<<"\tInstructions";
@@ -475,9 +528,16 @@ int level_3(int level_2_scores){
 		drawEnemy(0); 
 		drawEnemy(1); 
 		if( collision() == 1  ){
+			gamePlayAudio(2);
+			playerHitAudio(1);
+			Sleep(500);
 			lives--;
 			if(lives <= 0){
-			gameover(score);
+				playerHitAudio(2);
+				gamePlayAudio(2);
+				gameOverAudio(1);
+				Sleep(500);
+				gameover(score);
 			return score;
 			}
 		} 
@@ -567,9 +627,16 @@ int level_2(int level_1_scores){
 		drawEnemy(0); 
 		drawEnemy(1); 
 		if( collision() == 1  ){
+			gamePlayAudio(2);
+			playerHitAudio(1);
+			Sleep(500);
 			lives--;
 			if(lives <= 0){
-			gameover(score);
+				playerHitAudio(2);
+				gamePlayAudio(2);
+				gameOverAudio(1);
+				Sleep(500);
+				gameover(score);
 			return score;
 			}
 		} 
@@ -626,70 +693,79 @@ int level_1(){
 	gotoxy(WIN_WIDTH + 2, 15);cout<<" D Key - Right"; 
 	
 	gotoxy(18, 5);cout<<"Press any key to start";
-	getch();
-	gotoxy(18, 5);cout<<"                      ";
 	
-	while(1){
-		
-		if(score >= 50){
-			system("cls");
-			level_2(score);
-			system("cls");
-			break;
+	if(getch()){
+		gotoxy(18, 5);cout<<"                      ";
+		while(1){
 			
-		}
-		
-		if(kbhit()){
-			char ch = getch();
-			if( ch=='a' || ch=='A' ){
-				if( carPos > 18 )
-					carPos -= 4;
-			}
-			if( ch=='d' || ch=='D' ){
-				if( carPos < 50 )
-					carPos += 4;
-			} 
-			if(ch==27){ // Escape key
+			if(score >= 50){
+				system("cls");
+				level_2(score);
+				system("cls");
 				break;
+				
 			}
-		} 
-		
-		drawCar(); 
-		drawEnemy(0); 
-		drawEnemy(1); 
-		if( collision() == 1  ){
-			lives--;
-			if(lives <= 0){
-				gameover(score);
-			return score;
+			
+			if(kbhit()){
+				char ch = getch();
+				if( ch=='a' || ch=='A' ){
+					if( carPos > 18 )
+						carPos -= 4;
+				}
+				if( ch=='d' || ch=='D' ){
+					if( carPos < 50 )
+						carPos += 4;
+				} 
+				if(ch==27){ // Escape key
+					break;
+				}
+			} 
+			
+			drawCar(); 
+			drawEnemy(0); 
+			drawEnemy(1); 
+			if( collision() == 1  ){
+				gamePlayAudio(2);
+				playerHitAudio(1);
+				Sleep(500);
+				lives--;
+				if(lives <= 0){
+					playerHitAudio(2);
+					gamePlayAudio(2);
+					gameOverAudio(1);
+					Sleep(500);
+					gameover(score);
+				return score;
+				}
+			} 
+			Sleep(50);
+			eraseCar();
+			eraseEnemy(0);
+			eraseEnemy(1);   
+			
+			if( enemyY[0] == 10 )
+				if( enemyFlag[1] == 0 )
+					enemyFlag[1] = 1;
+			
+			if( enemyFlag[0] == 1 )
+				enemyY[0] += 1;
+			
+			if( enemyFlag[1] == 1 )
+				enemyY[1] += 1;
+			 
+			if( enemyY[0] > SCREEN_HEIGHT-4 ){
+				resetEnemy(0);
+				score++;
+				updateScore();
 			}
-		} 
-		Sleep(50);
-		eraseCar();
-		eraseEnemy(0);
-		eraseEnemy(1);   
-		
-		if( enemyY[0] == 10 )
-			if( enemyFlag[1] == 0 )
-				enemyFlag[1] = 1;
-		
-		if( enemyFlag[0] == 1 )
-			enemyY[0] += 1;
-		
-		if( enemyFlag[1] == 1 )
-			enemyY[1] += 1;
-		 
-		if( enemyY[0] > SCREEN_HEIGHT-4 ){
-			resetEnemy(0);
-			score++;
-			updateScore();
-		}
-		if( enemyY[1] > SCREEN_HEIGHT-4 ){
-			resetEnemy(1);
-			score++;
-			updateScore();
+			if( enemyY[1] > SCREEN_HEIGHT-4 ){
+				resetEnemy(1);
+				score++;
+				updateScore();
+			}
 		}
 	}
+	
 }
 
 //	Menu border
@@ -730,11 +806,11 @@ void prograssBar(string message){
     for(int i = 0; i<100; i++){
         int r = rand() % 1000;
         x++;
-        cout << "\r" << "                  " << x << "% Please Wait..." << flush;
+        cout << "\r" << "||                  " << x << "% Please Wait..." << flush;
         if(i < 43){
-           Sleep(r/6);
+           Sleep(r/10);
         }else if(i > 43 && i < 74){
-           Sleep(r/8);
+           Sleep(r/20);
         }else if(i < 98){
            Sleep(r/5);
         }else if(i > 97 && i != 99){
@@ -742,7 +818,7 @@ void prograssBar(string message){
         }
     }
 
-    cout << endl << endl << "                  " << message << "\n" << flush;
+    cout << endl << endl << "||                  " << message << "\n" << flush;
     Sleep(1000);
 }
 
@@ -750,12 +826,15 @@ void prograssBar(string message){
 
 int main()
 {
+
 	setcursor(0,0); 
 	srand( (unsigned)time(NULL));
-	 
+	HWND hWnd = GetConsoleWindow();
+	ShowWindow(hWnd,SW_SHOWMAXIMIZED);  
 	do{
 		system("cls");
 		gameName();
+		mainMenuAudio(1);
 		gotoxy(15,11); cout<<"1. Start Game";
 		gotoxy(15,12); cout<<"2. Instructions";	 
 		gotoxy(15,13); cout<<"3. High Scores";
@@ -764,15 +843,33 @@ int main()
 		char op = getche();
 		
 		if( op=='1') {
+			mainMenuAudio(2);
+			mainMenuClickAudio(1);
+			Sleep(500);
+			mainMenuClickAudio(2);
 			prograssBar("Let\'s Play Level 1");
+			gamePlayAudio(1);
+			Sleep(200);
 			level_1();
 		}
-		else if( op=='2') 
+		else if( op=='2'){
+			mainMenuAudio(2);
+			mainMenuClickAudio(1);
+			Sleep(500);
 			instructions();
-		else if( op=='3') 
+		} 
+		else if( op=='3'){
+			mainMenuAudio(2);
+			mainMenuClickAudio(1);
+			Sleep(500);
 			scoreBoardReader();
-		else if( op == '4')
+		}
+		else if( op == '4'){
+			mainMenuAudio(2);
+			mainMenuClickAudio(1);
+			Sleep(500);
 			exit(0);
+		}
 		
 	}while(1);
 	
