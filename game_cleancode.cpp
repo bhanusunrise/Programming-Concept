@@ -128,6 +128,100 @@ void gotoxy(int x, int y){
 	SetConsoleCursorPosition(console, CursorPosition);
 }
 
+// Prints the wallpapers
+
+// Wallpaper1
+
+void wallpaper(){
+	cout << endl << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "     ===  ===" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "   =  =    =  =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "  =   =    =   =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << " =    =    =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "=     =    =     =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << " =    =    =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "  =   =    =   =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "   =  =    =  =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "   =  =    =  =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "  =   =    =   =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << " =    =    =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "=     =    =     =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << " =    =    =    =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "  =   =    =   =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "   =  =    =  =" << endl;
+	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;	
+}
+
+// Wallpaper2
+
+void wallpaper2(){
+	cout << endl << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "             " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "               " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                 " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                  " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                 " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "               " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "               " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                 " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                  " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                 " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "                " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "               " << endl;
+	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;	
+}
+
+void animation(){
+	// infinite loop
+	for(int i=0; i<5; i++){
+	gotoxy(40,10);	wallpaper();
+	gotoxy(40,10);	wallpaper2();
+	gotoxy(42,10);	wallpaper();
+	gotoxy(42,10);	wallpaper2();
+	gotoxy(44,10);	wallpaper();
+	gotoxy(44,10);	wallpaper2();
+	gotoxy(46,10);	wallpaper();
+	gotoxy(46,10);	wallpaper2();
+	gotoxy(48,10);	wallpaper();
+	gotoxy(48,10);	wallpaper2();
+	gotoxy(50,10);	wallpaper();
+	gotoxy(50,10);	wallpaper2();
+	
+	}
+	gotoxy(40,10);	wallpaper();
+}
+
 // Set the cursor according to the game
 
 void setcursor(bool visible, DWORD size) {
@@ -823,10 +917,9 @@ void prograssBar(string message){
     Sleep(1000);
 }
 
-//	Main function
+// Game
 
-int main()
-{
+void game(){
 	setcursor(0,0); 
 	srand( (unsigned)time(NULL));
 	HWND hWnd = GetConsoleWindow();
@@ -834,6 +927,7 @@ int main()
 	do{
 		system("cls");
 		gameName();
+		animation();
 		mainMenuAudio(1);
 		gotoxy(15,11); cout<<"1. Start Game";
 		gotoxy(15,12); cout<<"2. Instructions";	 
@@ -872,7 +966,13 @@ int main()
 		}
 		
 	}while(1);
-	
+}
+
+//	Main function
+
+int main()
+{
+	game();
 	return 0;
 }
 
