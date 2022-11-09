@@ -25,6 +25,7 @@ using namespace std;
  
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition;
+CONSOLE_FONT_INFOEX cfie;
 
 // Basic Level Drawings and Variables
 
@@ -587,6 +588,23 @@ void instructions(){
 	getch();
 }
 
+//	Change the font
+
+void setUpFont(){
+	cfie.cbSize = sizeof(cfie);
+	cfie.nFont = 0;
+	cfie.dwFontSize.X = 0;
+	
+	//	Width of each character in the font
+	cfie.dwFontSize.Y = 24;
+	
+	cfie.FontFamily = FF_DONTCARE;
+	cfie.FontWeight = FW_NORMAL;
+	wcscpy(cfie.FaceName, L"Consolas");
+	
+	SetCurrentConsoleFontEx(console, FALSE, &cfie);
+}
+
 // Gameplay environment
 
 //	Level 3 -> Both enemies are +1 faster than level 1
@@ -673,7 +691,7 @@ int level_3(int level_2_scores){
 			enemyY[0] += 1;
 		
 		if( enemyFlag[1] == 1 )
-			enemyY[1] += 1.5;
+			enemyY[1] += 1.511;
 		 
 		if( enemyY[0] > SCREEN_HEIGHT-4 ){
 			resetEnemy(0);
@@ -950,6 +968,7 @@ void prograssBar(string message){
 */
 
 void game(){
+	setUpFont();
 	setcursor(0,0); 
 	srand( (unsigned)time(NULL));
 	HWND hWnd = GetConsoleWindow();
