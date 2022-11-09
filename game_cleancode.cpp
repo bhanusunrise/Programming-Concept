@@ -1,10 +1,10 @@
 /*
 	Team Members : 
 			IM/2020/108 - Pasindu Bhanuka
-			IM/2020/087 - Thamindu Premarathne
-			IM/2020/054 - Hasthika Udathanne
+			IM/2020/087 - Thamindu Premarathna
+			IM/2020/054 - Hasthika Udathenna
 			IM/2020/008 - Eranda De Silva
-			IM/2020/061 - Parami Wicramarathne
+			IM/2020/061 - W.M.A.O.Parami
 */
 
 #include<iostream>
@@ -28,7 +28,7 @@ COORD CursorPosition;
 
 // Basic Level Drawings and Variables
 
-int enemyY[3];
+float enemyY[3];
 int enemyX[3];
 int enemyFlag[3];
 char car[4][4] = { ' ','*','*',' ', 
@@ -352,6 +352,10 @@ int collision(){
 		if( enemyX[0] + 4 - carPos >= 0 && enemyX[0] + 4 - carPos < 9  ){
 			return 1;
 		}
+	}else if( enemyY[1]+4 >= 23 ){
+		if( enemyX[1] + 4 - carPos >= 0 && enemyX[1] + 4 - carPos < 9  ){
+			return 1;
+		}
 	}
 	return 0;
 }
@@ -669,7 +673,7 @@ int level_3(int level_2_scores){
 			enemyY[0] += 1;
 		
 		if( enemyFlag[1] == 1 )
-			enemyY[1] += 2;
+			enemyY[1] += 1.2;
 		 
 		if( enemyY[0] > SCREEN_HEIGHT-4 ){
 			resetEnemy(0);
@@ -768,7 +772,7 @@ int level_2(int level_1_scores){
 			enemyY[0] += 1;
 		
 		if( enemyFlag[1] == 1 )
-			enemyY[1] += 2;
+			enemyY[1] += 1.2;
 		 
 		if( enemyY[0] > SCREEN_HEIGHT-4 ){
 			resetEnemy(0);
