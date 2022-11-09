@@ -168,12 +168,6 @@ void wallpaper(){
 	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl << endl;
 	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
 	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
-	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
-	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
-	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
-	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
-	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
-	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
 	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl << endl;
 	cout << "\t\t\t\t\t\t\t\t   " << "      =    =" << endl;
 	cout << "\t\t\t\t\t\t\t\t   " << "   =  =    =  =" << endl;
@@ -202,12 +196,6 @@ void wallpaper2(){
 	cout << "\t\t\t\t\t\t\t\t    " << "                " << endl;
 	cout << "\t\t\t\t\t\t\t\t    " << "               " << endl;
 	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl << endl;
-	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
-	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
-	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
-	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
-	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
-	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
 	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
 	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl;
 	cout << "\t\t\t\t\t\t\t\t    " << "            " << endl << endl;
