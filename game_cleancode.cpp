@@ -673,7 +673,7 @@ int level_3(int level_2_scores){
 			enemyY[0] += 1;
 		
 		if( enemyFlag[1] == 1 )
-			enemyY[1] += 1.2;
+			enemyY[1] += 1.5;
 		 
 		if( enemyY[0] > SCREEN_HEIGHT-4 ){
 			resetEnemy(0);
